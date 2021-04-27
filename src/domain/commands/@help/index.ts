@@ -25,16 +25,24 @@ const help: ICommand = {
             commandsValue = "```\n" + Commands[command].description  + "```";
         }
 
+        const fields = await Promise.all(Object.values(Commands)
+            .filter(command => !command.parent || Object.keys(command.parent).length === 0)
+            .map(async (command) => {
+                const description = command.children && Object.values(command.children).length ? (
+                    `${command.description}\n${Object.values(command.children).map(subcommand => `\t- \`${subcommand.name}\`: ${subcommand.description}`).join('\n')}`
+                ) : command.description;
+                return ({
+                    name: command.name,
+                    value: description
+                });
+            })
+        );
+
         const embed = new Discord.MessageEmbed({
             "title": title,
             "description": description,
             "color": color,
-            "fields": [
-                {
-                    "name": "Commands",
-                    "value": commandsValue
-                }
-            ]
+            "fields": fields
         });
 
         message.channel.send(embed);

@@ -20,6 +20,22 @@ client.on('message', async (message) => {
         return;
     }
 
+    for (let i = args.length; i > 0; i--) {
+        const commandName = `${command} ${args.slice(0, i).join(' ')}`
+        
+        if (commandName in Commands) {
+             const newArgs = args.slice(i);
+             await Commands[commandName].execute(
+                message, 
+                (newArgs as string[]).filter(v => v.length > 0),
+                kwargs
+            );
+
+            return;
+        }
+    }
+    
+
     await Commands[command].execute(
         message, 
         (args as string[]).filter(v => v.length > 0),

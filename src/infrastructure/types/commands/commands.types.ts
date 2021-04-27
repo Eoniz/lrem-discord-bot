@@ -8,4 +8,6 @@ export interface ICommand {
         args?: string[], 
         kwargs?: Record<string, string>
     ) => Promise<void>;
+    children?: Record<string, ICommand>;
+    parent?: Record<string, ICommand>;
 }
