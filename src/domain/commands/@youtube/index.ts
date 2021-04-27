@@ -5,63 +5,6 @@ import { getInfo } from "ytdl-core";
 import ConnectionHandler from "./connection_handler";
 import PlaylistHandler from "./playlist_handler";
 
-const play = async (message: Discord.Message, args: string[], kwargs: Record<string, string>) => {
-    if (args.length !== 2) {
-        message.reply("You should give me the link of youtube first !");
-        return;
-    }
-
-    ConnectionHandler.getInstance().getConnection().play(
-        await ytdl(args[1], { filter: "audioonly" }), 
-        { type: "opus" }
-    );
-}
-
-const pause = async (message: Discord.Message) => {
-    if (!ConnectionHandler.getInstance().getConnection()) {
-        message.reply("I am not on a voice channel :(");
-        return;
-    }
-    
-    if (!ConnectionHandler.getInstance().getConnection().dispatcher) {
-        message.reply("I am currently streaming nothing :(");
-        return;
-    }
-
-    const dispatcher = ConnectionHandler.getInstance().getConnection().dispatcher;
-    dispatcher.pause();
-}
-
-const resume = async (message: Discord.Message) => {
-    if (!ConnectionHandler.getInstance().getConnection()) {
-        message.reply("I am not on a voice channel :(");
-        return;
-    }
-    
-    if (!ConnectionHandler.getInstance().getConnection().dispatcher) {
-        message.reply("I am currently streaming nothing :(");
-        return;
-    }
-
-    const dispatcher = ConnectionHandler.getInstance().getConnection().dispatcher;
-    dispatcher.resume();
-}
-
-const stop = async (message: Discord.Message) => {
-    if (!ConnectionHandler.getInstance().getConnection()) {
-        message.reply("I am not on a voice channel :(");
-        return;
-    }
-    
-    if (!ConnectionHandler.getInstance().getConnection().dispatcher) {
-        message.reply("I am currently streaming nothing :(");
-        return;
-    }
-
-    const dispatcher = ConnectionHandler.getInstance().getConnection().dispatcher;
-    dispatcher.destroy();
-}
-
 const handleNextPlaylist = async () => {
     if (ConnectionHandler.getInstance().getConnection().dispatcher) {
         ConnectionHandler.getInstance().getConnection().dispatcher.off("finish", handleNextPlaylist);
@@ -183,22 +126,6 @@ const youtube: ICommand = {
         ConnectionHandler.getInstance().setConnection(connection);
 
         if (args.length) {
-            if (args[0] === "play") {
-                await play(message, args, kwargs);
-            }
-
-            if (args[0] === "pause") {
-                await pause(message);
-            }
-
-            if (args[0] === "resume") {
-                await resume(message);
-            }
-
-            if (args[0] === "stop") {
-                await stop(message);
-            }
-
             if (args[0] === "playlist") {
                 await managePlaylist(message, args, kwargs);
             }
