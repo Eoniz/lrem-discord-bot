@@ -16,6 +16,7 @@ const youtubePause: ICommand = {
 
         const dispatcher = ConnectionHandler.getInstance().getConnection().dispatcher;
         dispatcher.pause();
+        message.react("⏸️");
     }
 }
 

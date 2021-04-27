@@ -16,6 +16,8 @@ const youtubeResume: ICommand = {
 
         const dispatcher = ConnectionHandler.getInstance().getConnection().dispatcher;
         dispatcher.resume();
+
+        message.react("⏯️");
     }
 }
 

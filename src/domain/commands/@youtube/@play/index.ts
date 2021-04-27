@@ -25,6 +25,8 @@ const youtubePlay: ICommand = {
             await ytdl(args[0], { filter: "audioonly" }), 
             { type: "opus" }
         );
+
+        message.react("⏯️");
     }
 }
 
