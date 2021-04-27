@@ -1,6 +1,6 @@
 import { ICommand } from "../../../../../infrastructure/types/commands/commands.types";
 
-const bis: ICommand = {
+const bisPong: ICommand = {
     name: "pong",
     description: "test pong",
     execute: async (message, args) => {
@@ -13,4 +13,4 @@ const bis: ICommand = {
     }
 }
 
-export default bis;
+export default bisPong;
