@@ -2,10 +2,16 @@ import * as Discord from 'discord.js';
 import initCommands, { Commands } from './domain/commands';
 import config from './infrastructure/config';
 import minimist from 'minimist-string';
+import { handlePetitBacDM } from './domain/@petitbac';
 
 const client = new Discord.Client();
 
 client.on('message', async (message) => {
+    if (message.channel.type === "dm") {
+        handlePetitBacDM(message);
+        return;
+    }
+
     if (!message.content.startsWith(config.discord.prefix)) {
         return;
     }
