@@ -4,8 +4,9 @@
   "description": "lrem bot",
   "main": "build/app.js",
   "scripts": {
-    "start": "tsc && node build/app.js",
-    "startDev": "tsc && nodemon build/app.js",
+    "compile": "tsc",
+    "start": "node build/app.js",
+    "dev": "nodemon -e ts --exec \"npm run compile && npm run start\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
