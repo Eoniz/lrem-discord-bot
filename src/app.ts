@@ -7,18 +7,26 @@ import { handlePetitBacDM } from './domain/@petitbac';
 const client = new Discord.Client();
 
 client.on('message', async (message) => {
+    if (message.author.bot) {
+        return;
+    }
+
     if (message.channel.type === "dm") {
         handlePetitBacDM(message);
         return;
     }
 
-    if (!message.content.startsWith(config.discord.prefix)) {
+    if (!message.content.startsWith(`${config.discord.prefix}.`)) {
         return;
     }
 
     const tempArgs = message.content.split(/\s+/);
     const command = tempArgs.shift().toLowerCase().slice(config.discord.prefix.length + 1);
     
+    if (!command || !command.length) {
+        return;
+    }
+
     const { _: args, ...kwargs } = minimist(tempArgs.join(' '));
 
     if (!(command in Commands)) {

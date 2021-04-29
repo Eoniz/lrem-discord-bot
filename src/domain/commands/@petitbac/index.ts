@@ -10,6 +10,7 @@ const petitbac: ICommand = {
     name: "petitbac",
     description: "Starts a game of Petit Bac",
     execute: async (message, args, kwargs) => {
+        console.log("?????");
         const categories = "categories" in kwargs
             ? kwargs["categories"].split(',').map(v => v.trim())
             : DEFAULT_CATEGORIES;
@@ -45,8 +46,6 @@ const petitbac: ICommand = {
 
                 players[user.id] = user;
             });
-
-            console.log(players);
 
             embedMessage.reply(`La partie va commencer avec: ${Object.values(players).map(p => `<@${p.id}>`).join(', ')}.`);
             initiateGame(message, players, categories);
